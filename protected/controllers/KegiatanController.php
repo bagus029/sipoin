@@ -32,7 +32,7 @@ class KegiatanController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','kemahasiswaan','Internasional'),
+				'actions'=>array('create','update','kemahasiswaan','Internasional','kirimtel','tarik'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -54,6 +54,42 @@ class KegiatanController extends Controller
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
+	}
+
+	public function actionKirimtel()
+	{
+		$message = "ini cuma belajar mih, cuma untuk melatih biar ga lupa gimana pemrograman";
+ $secret_token = "1023273551:AAFbujaqOnZYuN6YS4urbxCSG-A5zBBQhuY"; // Isi secret tokennya
+ $chatIds = array("728957052"); // Isi id telegramnya
+
+ foreach($chatIds as $chatId) {
+ file_get_contents("https://api.telegram.org/bot" . $secret_token ."/sendMessage?parse_mode=markdown&chat_id=$chatId&text=". urlencode($message));
+  }
+	}
+
+	public function actionTarik()
+	{
+
+		$secret_token = "1023273551:AAFbujaqOnZYuN6YS4urbxCSG-A5zBBQhuY";
+		$link = 'https://api.telegram.org/bot' . $secret_token .'/getUpdates';
+
+		$resp = file_get_contents($link);
+
+		$message = json_decode($resp,true);
+		$model = new Kegiatan;
+/*		if ($result["ok"]==1)
+return $result["result"];
+return [];*/
+//$messages = Bot::message();
+  //  $name = $message['from']['first_name'];
+    $pesan = $message['result[message[from[id]]]'];
+		//$x=$pesan['id'];
+ 	//	$pesan = $result['result']['message']['from']['id'];
+//$chat_id = $updates[message][chat][id];
+		$model->idkegiatan=$pesan;
+		$model->save();
+		$this->redirect(array('view','id'=>$pesan));
+
 	}
 
 	public function actionKemahasiswaan()

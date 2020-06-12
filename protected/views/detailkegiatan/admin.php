@@ -11,35 +11,12 @@ $this->menu=array(
 	array('label'=>'List Detailkegiatan', 'url'=>array('index')),
 	array('label'=>'Create Detailkegiatan', 'url'=>array('create')),
 );
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#detailkegiatan-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-	<?php $this->renderPartial('_search',array(
-		'model'=>$model,
-	)); ?>
-</div><!-- search-form -->
-
-
-
 <div class="row">
 	<div class="col-md-12">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Kelola <small>Detailkegiatans</small></h3>
+				<h3 class="card-title">Kelola <small>Detail Kegiatan</small></h3>
 			</div>
 			<div class="card-body">
 			<?php $this->widget('zii.widgets.grid.CGridView', array(
@@ -49,19 +26,35 @@ $('.search-form form').submit(function(){
 				'itemsCssClass'=>'table table-striped table-bordered table-hover',
 				'columns'=>array(
 					'iddetailkeg',
-					'idkegiatan',
-					'nim',
+					array(
+                    'name'=>'idkegiatan',
+										'header'=>'Jenis Kegiatan',
+                    'type'=>'html',
+                    'value'=>'$data->idkegiatan0->idjeniskegiatan0->jeniskegiatan','sortable'=>true,
+										'htmlOptions'=>array(
+													 'style'=>'width:15%;'
+											 )
+                  //  'filter'=>Chtml::listdata(Jeniskegiatan::model()->findAll(),'idjeniskegiatan','jeniskegiatan')
+									),
+					array(
+                    'name'=>'idkegiatan',
+										'header'=>'Nama Kegiatan',
+                    'type'=>'html',
+                    'value'=>'$data->idkegiatan0->namakegiatan','sortable'=>true,
+                  //  'filter'=>Chtml::listdata(Jeniskegiatan::model()->findAll(),'idjeniskegiatan','jeniskegiatan')
+									),
 					'detailkegiatan',
-					'statusdetailkeg',
 					'tglkegiatan',
-					/*
 					'tempatkegiatan',
 					'penyelenggara',
-					'validasi',
-					*/
 					array(
-						'class'=>'CButtonColumn',
+						'header' => 'Validasi',
+						'type' => 'raw',
+						'value' => 'Chtml::link("Validasi", array("detailkegiatan/view&id=$data->iddetailkeg"),array("class"=>"btn btn-warning", "target"=>"_blank"))',
 					),
+					/*array(
+						'class'=>'CButtonColumn',
+					),*/
 				),
 			)); ?>
 		</div>

@@ -197,8 +197,11 @@ class DetailkegiatanController extends Controller
 	 */
 	public function actionAdmin()
 	{
+
+		$nip='1';
 		$model=new Detailkegiatan('search');
 		$model->unsetAttributes();  // clear any default values
+
 		if(isset($_GET['Detailkegiatan']))
 			$model->attributes=$_GET['Detailkegiatan'];
 
