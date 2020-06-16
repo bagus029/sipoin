@@ -32,7 +32,7 @@ class DetailkegiatanController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','auto','editable'),
+				'actions'=>array('create','update','auto','editable','validasi'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -195,6 +195,22 @@ class DetailkegiatanController extends Controller
 	/**
 	 * Manages all models.
 	 */
+	 public function actionValidasi()
+ 	{
+
+ 		$nip='1';
+ 		$model=new Detailkegiatan('search');
+ 		$model->unsetAttributes();  // clear any default values
+
+ 		if(isset($_GET['Detailkegiatan']))
+ 			$model->attributes=$_GET['Detailkegiatan'];
+
+ 		$this->render('validasi',array(
+ 			'model'=>$model,
+ 		));
+ 	}
+
+
 	public function actionAdmin()
 	{
 

@@ -94,6 +94,7 @@ class Mahasiswa extends CActiveRecord
 			'surijinpns' => array(self::HAS_MANY, 'Surijinpn', 'NIM'),
 			'surketnobeswas' => array(self::HAS_MANY, 'Surketnobeswa', 'NIM'),
 			'surpermks' => array(self::HAS_MANY, 'Surpermk', 'NIM'),
+			'groupdetailkegiatans'=>array(self::HAS_MANY,'Groupdetailkegiatan','nim'),
 		);
 	}
 

@@ -32,7 +32,7 @@ class MahasiswaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','autocomplete'),
+				'actions'=>array('create','update','autocomplete','poin'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -146,6 +146,27 @@ class MahasiswaController extends Controller
 	/**
 	 * Manages all models.
 	 */
+	 public function actionPoin()
+ 	{
+
+		//$tahun='>2018';
+ 		$model=new Mahasiswa('search');
+ 		$model->unsetAttributes();  // clear any default values
+
+ 		if(isset($_GET['Mahasiswa']))
+ 			$model->attributes=$_GET['Mahasiswa'];
+
+
+		/*	$sql = "SELECT A.NIM,A.IDPRODI,A.NAMA,A.TAHUNANGKATAN, B.poin FROM sipensu.MAHASISWA A
+      INNER JOIN poinkemahasiswaan.groupdetailkegiatan B ON A.NIM = B.nim";
+      $data = Yii::app()->db2->createCommand($sql)->queryAll();*/
+
+ 		$this->render('poin',array(
+ 			'model'=>$model,
+ 		));
+ 	}
+
+
 	public function actionAdmin()
 	{
 		$model=new Mahasiswa('search');
